@@ -1,0 +1,69 @@
+name: llana
+
+services:
+  llana-app:
+    image: juicyllama/llana:$SOFTWARE_VERSION_TAG
+    ports:
+      - "172.17.0.1:29587:3000"
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+      JWT_KEY: ${JWT_KEY}
+      DOMAIN: ${DOMAIN}
+      CONFIG_AUTH_USERNAME: ${CONFIG_AUTH_USERNAME}
+      CONFIG_AUTH_PASSWORD: ${CONFIG_AUTH_PASSWORD}
+      CONFIG_AUTH_REALM: ${CONFIG_AUTH_REALM}
+      SOFT_DELETE: ${SOFT_DELETE}
+      SOFT_DELETE_KEY: ${SOFT_DELETE_KEY}
+      LOG_LEVELS_PROD: ${LOG_LEVELS_PROD}
+      AUTH_USER_TABLE_NAME: ${AUTH_USER_TABLE_NAME:-User}
+      AUTH_USER_TABLE_USERNAME_FIELD: ${AUTH_USER_TABLE_USERNAME_FIELD:-email}
+      AUTH_USER_TABLE_PASSWORD_FIELD: ${AUTH_USER_TABLE_PASSWORD_FIELD:-password}
+      AUTH_USER_TABLE_PASSWORD_ENCRYPTION: ${AUTH_USER_TABLE_PASSWORD_ENCRYPTION:-BCRYPT}
+      AUTH_USER_API_KEY_LOCATION: ${AUTH_USER_API_KEY_LOCATION:-BODY}
+      AUTH_USER_API_KEY_NAME: ${AUTH_USER_API_KEY_NAME:-x-api-key}
+      AUTH_USER_API_KEY_FIELD: ${AUTH_USER_API_KEY_FIELD:-UserApiKey.apiKey}
+      AUTH_USER_API_KEY_TABLE_NAME: ${AUTH_USER_API_KEY_TABLE_NAME:-}
+      AUTH_USER_API_KEY_TABLE_IDENTITY_COLUMN: ${AUTH_USER_API_KEY_TABLE_IDENTITY_COLUMN:-}
+      ROLE_LOCATION_USER_TABLE_NAME: $AUTH_USER_TABLE_NAME
+      ROLE_LOCATION_USER_TABLE_ROLE_FIELD: ${ROLE_LOCATION_USER_TABLE_ROLE_FIELD:-role}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: elestio/mysql:8.0
+    restart: always
+    ports:
+      - "172.17.0.1:22041:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: llana
+    command: --init-file /mysql/init.sql
+    volumes:
+      - ./llana-storage/mysql-data:/var/lib/mysql
+      - ./initdb/mysql.sql:/mysql/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "172.17.0.1", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: elestio/redis:6.2
+    restart: always
+    expose:
+      - "6379:6379"
+
+  phpmyadmin:
+    image: elestio/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: $MYSQL_ROOT_PASSWORD
+      UPLOAD_LIMIT: 500M
+    ports:
+      - 172.17.0.1:50465:80
+    depends_on:
+      - db

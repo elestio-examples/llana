@@ -1,0 +1,35 @@
+# set env vars
+set -o allexport; source .env; set +o allexport;
+
+cat << EOT >> ./.env
+DATABASE_URI=mysql://root:$MYSQL_ROOT_PASSWORD@db:3306/llana
+JWT_KEY=$(openssl rand -base64 32)
+
+#Delete Settings
+SOFT_DELETE_COLUMN=deletedAt
+
+#Delete Settings
+SOFT_DELETE=true
+SOFT_DELETE_KEY=deletedAt
+
+#Logging
+LOG_LEVELS_PROD="error,warn,log"
+LOG_LEVELS_SANDBOX="error,warn,log,debug"
+LOG_LEVELS_TEST="error,warn,log"
+LOG_LEVELS_DEV="error,warn,log,debug"
+
+#Auth
+AUTH_USER_TABLE_NAME=User
+#AUTH_USER_TABLE_USERNAME_FIELD=
+#AUTH_USER_TABLE_PASSWORD_FIELD=
+#AUTH_USER_TABLE_PASSWORD_ENCRYPTION=
+#AUTH_USER_API_KEY_LOCATION=
+#AUTH_USER_API_KEY_NAME=
+#AUTH_USER_API_KEY_FIELD=
+#AUTH_USER_API_KEY_TABLE_NAME=
+#AUTH_USER_API_KEY_TABLE_IDENTITY_COLUMN=
+
+#Roles
+#ROLE_LOCATION_USER_TABLE_NAME=
+#ROLE_LOCATION_USER_TABLE_ROLE_FIELD=
+EOT
