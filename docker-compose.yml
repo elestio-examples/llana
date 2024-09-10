@@ -3,6 +3,7 @@ name: llana
 services:
   llana-app:
     image: juicyllama/llana:$SOFTWARE_VERSION_TAG
+    restart: always
     ports:
       - "172.17.0.1:29587:3000"
     environment:
@@ -42,11 +43,6 @@ services:
     volumes:
       - ./llana-storage/mysql-data:/var/lib/mysql
       - ./initdb/mysql.sql:/mysql/init.sql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "172.17.0.1", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   redis:
     image: elestio/redis:6.2
