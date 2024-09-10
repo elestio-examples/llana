@@ -28,7 +28,7 @@ environments:
     value: "random_password"
   - key: "HOST"
     value: "[CI_CD_DOMAIN]"
-  - key: "MYSQL_ROOT_PASSWORD"
+  - key: "DOMAIN"
     value: "[CI_CD_DOMAIN]"
   - key: "CONFIG_AUTH_USERNAME"
     value: "llana"
