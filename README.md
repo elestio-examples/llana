@@ -14,6 +14,29 @@ Connect to Llana Server URL here:
 
     URL: https://[CI_CD_DOMAIN]
 
+## Building Request
+
+Llana offer a dedicated /login endpoint where you can exchange your username and password for an access token, which can be used for authentication in subsequent requests.
+
+    curl -X POST https://[CI_CD_DOMAIN]/login \
+    -H "Content-Type: application/json" \
+    -d '{
+        "username": "test@test.com",
+        "password": "test"
+    }'
+
+Expected Response:
+
+    {
+        "access_token": "your_access_token"
+    }
+
+### Use the Access Token for Authorization in Postman
+
+1. In Postman, open the "Authorization" tab for the request where you want to use the token.
+2. Choose the "Bearer Token" option from the dropdown.
+3. Paste the `access_token` obtained from the previous step into the token field.
+4. Now, the request will automatically include the token in the `Authorization` header as Bearer `<access_token>`.
 
 ## Documentation
 
