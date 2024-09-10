@@ -17,4 +17,4 @@ Connect to Llana Server URL here:
 
 ## Documentation
 
-For more information how query, you can follow the [Official Documentation](https://juicyllama.com/tools/llana/endpoints)
+For more information how to query, you can follow the [Official Documentation](https://juicyllama.com/tools/llana/endpoints)
