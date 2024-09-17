@@ -16,9 +16,9 @@ Connect to Llana Server URL here:
 
 ## Building Request
 
-Llana offer a dedicated /login endpoint where you can exchange your username and password for an access token, which can be used for authentication in subsequent requests.
+Llana offer a dedicated `/auth/login` endpoint where you can exchange your username and password for an access token, which can be used for authentication in subsequent requests.
 
-    curl -X POST https://[CI_CD_DOMAIN]/login \
+    curl -X POST https://[CI_CD_DOMAIN]/auth/login \
     -H "Content-Type: application/json" \
     -d '{
         "username": "test@test.com",

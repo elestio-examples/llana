@@ -15,6 +15,7 @@ ports:
     public: true
     path: "/"
     isAuth: true
+    loginTitle: "PHPMyAdmin"
     login: "root"
     password: "random_password"
 environments:
