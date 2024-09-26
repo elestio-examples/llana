@@ -14,6 +14,10 @@ Connect to Llana Server URL here:
 
     URL: https://[CI_CD_DOMAIN]
 
+## About Software
+
+Llana is a no-code API wrapper that exposes a REST API for any database within minutes. Stop wasting time building endpoints, just connect your database and start playing. Open source, free to use, and no vendor lock-in.
+
 ## Building Request
 
 Llana offer a dedicated `/auth/login` endpoint where you can exchange your username and password for an access token, which can be used for authentication in subsequent requests.
@@ -21,8 +25,8 @@ Llana offer a dedicated `/auth/login` endpoint where you can exchange your usern
     curl -X POST https://[CI_CD_DOMAIN]/auth/login \
     -H "Content-Type: application/json" \
     -d '{
-        "username": "test@test.com",
-        "password": "test"
+        "username": "[ADMIN_EMAIL]",
+        "password": "[ADMIN_PASSWORD]"
     }'
 
 Expected Response:
