@@ -45,4 +45,4 @@ Expected Response:
 ## Documentation
 
 - You can access and fork the official Postman collection for the JuicyLlama Framework [here](https://www.postman.com/juicyllama/workspace/framework/folder/18538466-e4034b2d-9a3e-42a9-a850-c551d47abfbe).
-- For more information how to query, you can follow the [Official Documentation](https://juicyllama.com/tools/llana/endpoints)
+- For more information on how to query, you can follow the [Official Documentation](https://llana.io/install)
